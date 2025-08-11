@@ -43,6 +43,7 @@ const SaleForm: React.FC = () => {
           .select('quantity')
           .eq('id', item.productId)
           .single();
+        if (!product) throw new Error(`Product not found for ${item.name}`);
         if (product.quantity < item.quantity) throw new Error(`Insufficient stock for ${item.name}`);
 
         await supabase.from('sale_items').insert({
